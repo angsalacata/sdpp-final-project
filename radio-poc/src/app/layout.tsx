@@ -1,13 +1,12 @@
 'use client'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AudioContext } from "./contexts/AudioContext";
+import { RadioAudioContextProvider } from "./contexts/AudioContext";
+import { PersistentPlayer } from "./players/persistent-player";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-console.log("LOOK")
-console.log(AudioContext)
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -25,9 +24,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AudioContext.Provider value={{isPlaying: true}}>
+        <RadioAudioContextProvider testInt={1}>
+
+          <PersistentPlayer></PersistentPlayer>
         {children}
-        </AudioContext.Provider>
+        </RadioAudioContextProvider>
       </body>
     </html>
   );

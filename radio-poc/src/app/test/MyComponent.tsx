@@ -1,10 +1,10 @@
 "use client"
 
 import {useContext} from 'react';
-import { AudioContext } from '../contexts/AudioContext';
+import { RadioAudioContext } from '../contexts/AudioContext';
 
 export default function MyComponent({}){
-    const testBool = useContext(AudioContext);
+    const testBool = useContext(RadioAudioContext);
     console.log("hellooo");
 
     console.log(testBool);
