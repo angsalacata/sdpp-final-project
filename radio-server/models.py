@@ -4,6 +4,14 @@ from sqlalchemy.orm import sessionmaker
 import db
 import logging
 from flask import Flask, jsonify, request, send_file, Response, make_response
+import requests
+import os
+from dotenv import load_dotenv 
+import datetime
+import time
+import pytz
+
+load_dotenv(dotenv_path=".env")
 
 engine, metadata = db.get_connection()
 Session = sessionmaker(engine)
@@ -11,8 +19,11 @@ Session = sessionmaker(engine)
 mixes_table = Table('mixes', metadata, autoload=True)
 shows_table = Table('shows', metadata, autoload=True)
 
+RADIO_CULT_URI = os.getenv('RADIO_CULT_URI')
+RADIO_CULT_STATION_ID = os.getenv('RADIO_CULT_STATION_ID')
+RADIO_CULT_KEY = os.getenv('RADIO_CULT_KEY')
 
-class Archive():
+class Archive:
     def get_archive(items_limit, offset):
         archive_sql = """
            SELECT mixes.mixname, shows.showname, mixes.bucketkey, mixes.description, mixes.genre, mixes.genre2, 
@@ -64,10 +75,39 @@ class Archive():
                 'errormsg': "error retrieving archive: " + str(e)
             })
         
-class Schedule():
+class Schedule:    
+    # startDate=<iso_timestamp>&endDate=<iso_timestamp>'
     def get_schedule():
-        pass
+        # grab the schedule for one week starting with day to day + 1 week
+        # GET /api/station/:stationId/schedule?startDate=<iso_timestamp>&endDate=<iso_timestamp>
+        api = f'{RADIO_CULT_URI}/api/station/{RADIO_CULT_STATION_ID}/schedule?'
+        today = datetime.date.today()
+        
+        today_midnight = datetime.datetime.combine(today, datetime.time()).isoformat(timespec='microseconds')
+
+        next_week = datetime.datetime.combine((today + datetime.timedelta(days=7)), datetime.time()).isoformat(timespec='microseconds')
+
+        print(today_midnight)
+        print(next_week)
+        
+        schedule_uri = f'{api}startDate={today_midnight}Z&endDate={next_week}Z'
+        print(schedule_uri)
+
+        try:
+            print("ATTEMPTING TO GET SCHEDULE DATA")
+            res = requests.get(schedule_uri, data={'key': RADIO_CULT_KEY})
+            return res.json() 
+        
+        except Exception as e:
+            logging.error("error grabbing schedule",)
+            return jsonify({
+                'errormsg': "error retrieving schedule: " + str(e)
+            })
+        
 
 class StreamingObject():
     def get_streaming_object():
+        # get metadata object for live schedule with GET /api/station/:stationId/schedule/live
+
+        # append the stream url
         pass
