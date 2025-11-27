@@ -21,4 +21,4 @@ app.register_blueprint(streaming_apis, url_prefix="/stream")
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host="localhost", port=8080)
