@@ -6,8 +6,6 @@ import PauseIcon from "@mui/icons-material/Pause"
 import { fetchInitialGetLiveStream } from "../lib/radio-actions";
 import io from 'socket.io-client';
 import SocketIo from 'socket.io-client';
-import { use } from 'react'
-import { useEffect } from "react";
 
 export function LiveStreamElement(props:any){
     const {isPlaying, audioUrl, playTrack, togglePlayPause, liveStreamStatus, liveStreamShowName, setUpdatedStreamInfo} = useRadioAudioContext();
@@ -18,21 +16,15 @@ export function LiveStreamElement(props:any){
 
     const isPlayingLiveStream = props.mixKey === audioUrl;
 
-    const initialLiveStreamData = use(props.initialData);
+    const initialLiveStreamData = fetchInitialGetLiveStream();
 
     console.log("got initial live stream data")
     console.log(initialLiveStreamData)
     
     const initialLiveStreamStatus = initialLiveStreamData['result']['status']
-    const initialLiveStreamName = initialLiveStreamStatus == 'schedule'? initialLiveStreamData['result']['content']['title'] : ''
-    console.log("got initial live stream status and name!")
-    console.log(initialLiveStreamStatus)
-    console.log(initialLiveStreamName)
+    const initialLiveStreamName = initialLiveStreamStatus == 'scheduled'? initialLiveStreamStatus['result']['title'] : ''
 
-    useEffect(() =>{
-        console.log("UPDATING WITH WHAT MY INITIAL LIVE STREAM STATUS IS")
-        setUpdatedStreamInfo(initialLiveStreamStatus, initialLiveStreamName)
-    }, [initialLiveStreamStatus, initialLiveStreamName, setUpdatedStreamInfo])
+    setUpdatedStreamInfo(initialLiveStreamName, initialLiveStreamName)
 
     const handleClick = (mixKey: string) =>{
         if (isPlayingLiveStream) {
