@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1070)"><rect width="1000" height="1000" fill="#eff3f4"></rect><g transform="matrix(0.8482563619227145,0,0,0.8482563619227145,49.99999999999994,49.99999999999994)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="1061" height="1061"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:svgjs="http://svgjs.dev/svgjs" version="1.1" viewBox="0 0 1061 1061">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #171819;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #eff3f4;
+      }
+    </style>
+  <clipPath id="SvgjsClipPath1070"><rect width="1000" height="1000" x="0" y="0" rx="500" ry="500"></rect></clipPath></defs>
+  <rect class="cls-2" x="0" y="0" width="1061" height="1061" rx="530.5" ry="530.5"></rect>
+  <g>
+    <path class="cls-1" d="M550.9,998.7c-258.2,0-468.2-210-468.2-468.2h70.5c0,219.3,178.4,397.7,397.8,397.7v70.5Z"></path>
+    <path class="cls-1" d="M978.3,530.5h-70.5c0-219.3-178.4-397.8-397.8-397.8V62.3c258.2,0,468.2,210,468.2,468.2Z"></path>
+  </g>
+</svg></svg></g></g></svg>
