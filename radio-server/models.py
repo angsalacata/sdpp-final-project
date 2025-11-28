@@ -34,40 +34,47 @@ class Archive:
            LIMIT %s OFFSET %s
         """ % (items_limit, offset)
 
+
+        archive_count_sql = """
+           SELECT COUNT(*) from mixes
+           INNER JOIN shows on mixes.showid=shows.showid
+           WHERE (TIMESTAMPDIFF(SECOND, mixes.airdate, TIMESTAMP(NOW())) >= 0)
+        """
+
+
         try:
             archive = []
             with Session() as session:
                 rows = session.execute(archive_sql)
 
+                num_mixes = session.execute(archive_count_sql).fetchone()[0]
+                num_pages = int(num_mixes/items_limit)
+
                 for row in rows:
-
-                    print(row)
-                    print(type(row))
-                    print(len(row))
-                    print('\n')
-
                     dict = {
-                    'mixName': row[1],
-                    'showName': row[2],
-                    'mixKey': db.getResourceURL(row[3], row[10]),
-                    'description': row[4],
-                    'genre': [row[5], row[6], row[7], row[8]],
-                    'image': db.getResourceURL(row[9], row[11]),
-                    'showslug': row[12],
-                    'explicit': row[13],
-                    'tracklistid': row[14], 
-                    'airdate': row[15],
-                    'location': row[16],
-                    'hostName': row[17],
-                    'guest': row[18],
-                    'live': row[19],
-                    'mixid': row[0]
+                    'mixName': row[0],
+                    'showName': row[1],
+                    'mixKey': db.getResourceURL(row[2], row[9]),
+                    'description': row[3],
+                    'genre': [row[4], row[5], row[6], row[7]],
+                    'image': db.getResourceURL(row[8], row[10]),
+                    'showslug': row[11],
+                    'explicit': row[12],
+                    'tracklistid': row[13], 
+                    'airdate': row[14],
+                    'location': row[15],
+                    'hostName': row[16],
+                    'guest': row[17],
+                    'live': row[18],
+                    'mixid': row[19]
                     }
 
                     archive.append(dict)
-                    print(dict)
 
-            return jsonify(archive)
+            return jsonify({
+                'archive': archive,
+                'numPages': num_pages
+                })
     
         except Exception as e:
             logging.error("error connecting to db from /archive",)

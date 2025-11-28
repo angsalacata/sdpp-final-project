@@ -11,7 +11,6 @@ ITEMS_PER_PAGE = 10
 def get_archive_api():
     try:
         pageVal = request.args['page']
-        print(f"page value: {pageVal}")
         offset =  (int(pageVal) - 1) * ITEMS_PER_PAGE
         return models.Archive.get_archive(ITEMS_PER_PAGE, offset)
     
