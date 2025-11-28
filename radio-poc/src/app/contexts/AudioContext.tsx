@@ -1,5 +1,6 @@
 'use client'
-
+import {io, Socket} from 'socket.io-client';
+import SocketIo from 'socket.io-client';
 import test from 'node:test';
 import {
   createContext,
@@ -10,7 +11,6 @@ import {
   useRef,
   useCallback,
 } from 'react';
-
 
 type RadioAudioContextType = {
     isPlaying: boolean;
@@ -26,8 +26,12 @@ type RadioAudioContextType = {
     airDate: string | null;
     playTrack: (trackURL: string, mixName: string, showName: string, djName: string, imageUrl:string, location: string, airDate:string) => void;
     togglePlayPause: () => void;
-    // setCurrentTime: (time: number) => void;
-    // setDuration: (duration: number) => void;
+    // socket for live stream
+    socket: Socket | null;
+    // live stream meta data info
+    liveStreamStatus: string;
+    liveStreamShowName: string;
+    setUpdatedStreamInfo: (liveStreamStatus: string, liveStreamShowName: string) => void;
 }
 
 export const RadioAudioContext = createContext<RadioAudioContextType | undefined>(undefined);
@@ -45,11 +49,73 @@ export function RadioAudioContextProvider ({testInt, children}: {testInt: number
   const [audioUrl, setAudioUrl] = useState('');
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [liveStreamStatus, setLiveStreamStatus] = useState('');
+  const [liveStreamShowName, setLiveStreamShowName] = useState('');
+
   const audioHTML = useRef<HTMLAudioElement| null>(null);
   console.log("MY TEST INT")
-      console.log(testInt)
-    
+  console.log(testInt)
 
+
+  const setUpdatedStreamInfo = (liveStreamStatusIn: string, liveStreamShowNameIn: string) => {
+    console.log("UPDATING THE STREAM STATUS AND SHOWNAME!")
+    setLiveStreamStatus(liveStreamStatusIn)
+    setLiveStreamShowName(liveStreamShowNameIn)
+  }
+    
+  const socket = SocketIo('https://api.radiocult.fm', {
+
+        auth: {
+            'x-api-key': 'pk_0702c923a16b4a24814a6c4a668001c8',
+                },
+        transports: ['websocket'],
+        query: {
+            stationId: 'redux-731b6892',
+        },
+    })
+  
+  useEffect(() => {
+        
+        console.log("IN USE EFFECT IN CONTEXT ")
+
+        socket.on('connect', () => {
+        console.log('Socket connected:', socket.id);
+        });
+
+        socket.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+        });
+
+        socket.on('disconnect', (reason) => {
+            console.log('Socket disconnected:', reason);
+        });
+
+        socket.on('player-metadata', ({status, content, metadata }) => {
+        console.log("did i get meta data")
+        console.log(status)
+        console.log("content")
+        console.log(content)
+        console.log("meta data")
+        console.log(metadata)
+
+        if (status == "schedule") {
+            const scheduleEventName = content["title"]
+            setUpdatedStreamInfo(status, scheduleEventName)
+        }
+        else {
+            setUpdatedStreamInfo(status, '')
+        }
+    });
+
+    return () => {
+        console.log("disconnecting?")
+        socket.off('connect');
+        socket.off('connect_error');
+        socket.off('disconnect');
+		socket.off("player-metadata");
+	};
+    }, [socket, liveStreamStatus, liveStreamShowName])
+  
   const playTrack = (trackURL: string, mixName: string, showName: string, djName: string, imageUrl: string, location: string, airDate: string) => {
     setAudioUrl(trackURL);
       setIsPlaying(true);
@@ -83,6 +149,8 @@ export function RadioAudioContextProvider ({testInt, children}: {testInt: number
         }
     }
 
+
+
     return (
     <RadioAudioContext.Provider value={{
     isPlaying,
@@ -97,7 +165,12 @@ export function RadioAudioContextProvider ({testInt, children}: {testInt: number
     location,
     airDate,
     playTrack,
-    togglePlayPause}}>
+    togglePlayPause,
+    socket,
+    liveStreamStatus,
+    liveStreamShowName,
+    setUpdatedStreamInfo
+    }}>
         {children}
         </RadioAudioContext.Provider>)
   }
