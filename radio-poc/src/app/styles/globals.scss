@@ -1,0 +1,555 @@
+@import "variables";
+
+/** --------------------- BACKGROUND & TEXT STYLES --------------------- **/
+$favorit-mono: "Favorit Mono";
+$camera: "Camera";
+
+@font-face {
+  src: url("/fonts/ABCFavoritMono-Regular.woff") format("woff");
+  font-family: $favorit-mono;
+}
+
+@font-face {
+  src: url("/fonts/ABCCameraPlain-Regular.woff") format("woff");
+  font-family: $camera;
+}
+
+html {
+  background-color: $background;
+}
+
+body {
+  margin: 0;
+}
+
+:root {
+  --num-shows: 0;
+}
+
+/** --------------------- TYPE RULES --------------------- **/
+body {
+  @include mono-type;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+h1,
+h2 {
+  @include header;
+}
+
+a:any-link {
+  @include mono-type;
+}
+
+.ticker {
+  background-color: $zapp-2;
+  border-bottom: 1px solid $copy;
+  height: 40px;
+  .rfm-child {
+    margin-right: 0.7em;
+  }
+}
+
+/** --------------------- MENU --------------------- **/
+.menu-container {
+  height: 65px;
+  @media (max-width: $mobile-width) {
+    height: 122px;
+  }
+}
+.menu {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 2px solid $copy;
+  padding: $menu-vertical-padding $menu-horizontal-padding;
+  align-items: center;
+  align-content: space-between;
+  a {
+    text-decoration: none;
+  }
+
+  @media (max-width: $mobile-width) {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.menu-links {
+  // flex-grow: 2;
+  margin-left: $menu-links-left-padding;
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: $mobile-width) {
+    flex-direction: column;
+    margin-left: 0;
+  }
+}
+
+.menu-link {
+  margin-right: 3vw;
+  &:first-child {
+    margin-left: 1vw;
+    .selected {
+      margin-left: 0vw;
+    }
+
+    @media (max-width: $mobile-width) {
+      margin-left: 0;
+    }
+  }
+  .noselect {
+    margin-right: 1vw;
+  }
+  span.noselect {
+    display: none;
+  }
+
+  &:hover {
+    background: $electric-blue;
+    color: $background;
+  }
+}
+
+.search {
+  .search-input {
+    background: none;
+    color: $copy;
+    border: none;
+    opacity: 100%;
+    padding: 0;
+    width: fit-content;
+  }
+
+  @media (max-width: $mobile-width) {
+    display: flex;
+    width: 100%;
+    margin-top: 2vh;
+    justify-content: flex-end;
+    .search-input {
+      width: 50%;
+      padding-left: 1vw;
+    }
+  }
+}
+
+.menu .logo-img {
+  height: $logo-size;
+  display: flex;
+  align-content: center;
+  a {
+    display: inline;
+    height: $logo-size;
+  }
+  img {
+    height: $logo-size;
+  }
+
+  @media (max-width: $mobile-width) {
+    width: 50%;
+    height: 3.5em;
+    align-self: center;
+    img {
+      height: 3.5em;
+      // width: 50%;
+    }
+  }
+}
+
+// style for any input text box
+input[type="text"],
+.search-input {
+  background: none;
+  color: $copy;
+  opacity: 100%;
+  padding: 0;
+
+  @include bodycopy;
+  &::placeholder,
+  &[name="showcode"] {
+    @include mono-type;
+  }
+  &:focus {
+    border-bottom: 1px solid $copy;
+    outline: none;
+  }
+}
+
+/** --------------------- CONTENT CONTAINER --------------------- **/
+.container {
+  height: 100%;
+  width: 100vw;
+  // position: absolute;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: $mobile-width) {
+    width: 100%;
+  }
+}
+.content-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  overflow-x: hidden;
+  // overflow-y: scroll;
+  // height: max-content;
+  min-height: 100vh;
+  @media (max-width: $mobile-width) {
+    width: 100%;
+  }
+}
+
+.content {
+  display: flex;
+  margin: $content-vertical-padding $content-horizontal-padding;
+  min-height: 100vh;
+  // height: max-content;
+  width: calc(100vw - (2 * $content-horizontal-padding));
+  align-items: flex-start;
+  justify-content: center;
+  @media (max-width: $mobile-width) {
+    box-sizing: border-box;
+    width: fit-content;
+    min-width: calc(100vw - (2 * 10px));
+    padding: 6px;
+    margin: 10px;
+  }
+}
+
+/** --------------------- FOOTER --------------------- **/
+.footer-container {
+  background-color: $bkg-secondary;
+  height: 200px;
+  // height: 500px;
+  padding: $menu-horizontal-padding;
+  padding-right: 0;
+  width: 100%;
+  margin-top: 5em;
+  padding-bottom: 8em;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media (max-width: $mobile-width) {
+    height: 300px;
+    .footer span {
+      width: 100%;
+    }
+  }
+  .footer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    padding: 0 $menu-horizontal-padding;
+    align-self: flex-end;
+    width: 100%;
+    // height: 200px;
+    & > * {
+      width: 20%;
+    }
+  }
+}
+
+/** --------------------- PAGINATION --------------------- **/
+.pagination {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2em;
+
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .arrow {
+    svg {
+      font-size: 1.2em;
+    }
+
+    padding-right: 1em;
+  }
+
+  .page-num {
+    display: flex;
+    flex-direction: row;
+    & > * {
+      margin-right: 1em;
+    }
+  }
+
+  .disabled {
+    display: none;
+  }
+}
+
+/** --------------------- AUDIO CONTROLS --------------------- **/
+/** --------------------- & PERSISTENT PLAYER ---------------- **/
+.mix-play-button {
+  background-color: transparent;
+  color: $copy;
+  border: none;
+  padding: 0 1.5em 0 0;
+  box-sizing: border-box;
+}
+
+// TODO: need to increase size of entire webpage when player is open
+.container {
+  .persistent-player-container {
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    // padding: 1vh 3vw;
+    height: $player-size;
+    bottom: 0;
+    border-top: 1px solid $copy;
+    background-color: $background;
+    display: none;
+    &.isPlaying {
+      display: flex;
+      align-items: stretch;
+    }
+  }
+}
+
+.persistent-player {
+  flex-direction: row;
+  display: flex;
+  width: 100%;
+  height: $player-size;
+  justify-content: space-between;
+  align-items: stretch;
+
+  .playbutton-wrap {
+    // display: flex;
+    // align-items: stretch;
+    // justify-content: center;
+    border-right: 1px solid $copy;
+    box-sizing: border-box;
+
+    width: $player-size;
+    height: $player-size;
+
+    display: grid;
+
+    & > * {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .mix-play-button {
+      padding: 0;
+      width: $player-size;
+      height: $player-size;
+      z-index: 5;
+      color: white;
+      mix-blend-mode: difference;
+      svg {
+        font-size: 1.75em;
+        width: 1.75em;
+        height: 1.75em;
+      }
+    }
+
+    .mix-image {
+      height: $player-size;
+      width: $player-size;
+    }
+
+    .mix-image img {
+      box-sizing: border-box;
+      border-right: 1px solid $copy;
+      height: $player-size;
+      width: $player-size;
+      object-fit: cover;
+    }
+  }
+
+  .info-progbar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: $player-size;
+    max-height: $player-size;
+    align-items: stretch;
+    justify-content: space-between;
+
+    .player-mix-info {
+      .player-info-airdate-location {
+        display: flex;
+        flex-direction: row;
+        .show-air-date {
+          padding-bottom: 0.3em;
+        }
+        @include label;
+      }
+      display: flex;
+      // align-items: center;
+      box-sizing: border-box;
+      margin: 0.5em;
+      margin-bottom: 0;
+      height: 60%;
+      display: flex;
+      flex-direction: column;
+
+      @media (max-width: $mobile-width) {
+        margin: 0.5em;
+        .show-air-date {
+          flex-grow: 2;
+        }
+      }
+      .host {
+        @include host;
+      }
+    }
+    .progressbar-container {
+      display: flex;
+      flex-direction: column;
+      align-self: flex-end;
+      justify-content: flex-end;
+      width: 100%;
+      height: 40px;
+      flex-grow: 2;
+      .progressbar {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-self: flex-end;
+        height: 0.5em;
+        width: 100%;
+        background-color: $electric-blue;
+        border-top: 1px solid $copy;
+        border-bottom: 1px solid $copy;
+        margin-top: 0.3em;
+        .track-progress {
+          background-color: $copy;
+        }
+      }
+      .timestamp {
+        width: 100%;
+        box-sizing: border-box;
+        align-self: flex-end;
+        padding-left: 0.7em;
+        padding-right: 1em;
+        text-align: justify;
+        @include label;
+      }
+
+      @media (max-width: $mobile-width) {
+        .progressbar {
+          height: 0.6em;
+        }
+        .timestamp {
+          padding-left: 0.7em;
+          align-self: flex-start;
+        }
+      }
+    }
+  }
+}
+
+/** --------------------- LANDING PAGE ---------------- **/
+
+.landing {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include circle-img($landing-page-circle);
+  a.circle-show-link {
+    display: contents;
+    border-radius: 50%;
+    &:hover {
+      .circle-txt,
+      .show-image {
+        animation-play-state: paused;
+      }
+    }
+  }
+  .circle-img-txt {
+    margin: 0;
+  }
+  .circle-txt {
+    animation: spin-reverse $spin-speed linear infinite;
+  }
+  .show-image {
+    animation: spin $spin-speed linear infinite;
+  }
+
+  @media (max-width: $mobile-width) {
+    margin: 50px 0;
+  }
+
+  .line {
+    height: 15vh;
+    margin: 5vh;
+    border-left: 1px dashed $copy;
+  }
+
+  .show-table-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0;
+
+    @media (max-width: $mobile-width) {
+      width: 100%;
+    }
+
+    p {
+      align-self: center;
+    }
+  }
+
+  .small-archive {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .show-archive-table {
+    width: 100%;
+    border-top: 1px solid $copy;
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  100% {
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+  }
+}
+
+#info .info {
+  // height: 100vh;
+  h2 {
+    @include mono-type;
+  }
+  p,
+  li {
+    @include bodycopy;
+  }
+
+  ul {
+    padding-inline-start: 1.5em;
+  }
+  li {
+    list-style: square;
+  }
+}

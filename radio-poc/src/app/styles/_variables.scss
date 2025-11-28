@@ -1,0 +1,164 @@
+/** --------------------- COLORS --------------------- **/
+$background: #eff3f4;
+$copy: #171819;
+
+$bkg-secondary: #f7fbfc;
+$copy-secondary: #282b2d;
+
+$zapp-2: #f3f9bb;
+$electric-blue: #008aff;
+/** TODO design may want different color for disabled button**/
+$disabled-button: #c8bfbfe0;
+/** --------------------- SIZES & PADDING --------------------- **/
+$menu-vertical-padding: 10px;
+
+$menu-horizontal-padding: 4vw;
+$menu-links-left-padding: 0vw;
+$logo-size: 34px;
+
+$content-horizontal-padding: calc(10vw + 60px);
+$content-vertical-padding: 6vh;
+
+$mobile-width: 440px;
+
+$show-page-circle: 650px;
+$landing-page-circle: 750px;
+
+$player-size: 120px;
+
+$spin-speed: 120s;
+
+/** --------------------- TYPE STYLES --------------------- **/
+$favorit-mono: "Favorit Mono";
+$camera: "Camera";
+
+@font-face {
+  src: url("/fonts/ABCFavoritMono-Regular.woff") format("woff");
+  font-family: $favorit-mono;
+}
+
+@font-face {
+  src: url("/fonts/ABCCameraPlain-Regular.woff") format("woff");
+  font-family: $camera;
+}
+
+@mixin mono-type {
+  color: $copy;
+  font-family: $favorit-mono;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+@mixin label {
+  @include mono-type;
+  font-size: 0.75em;
+}
+
+@mixin host {
+  @include mono-type;
+  font-size: 0.85em;
+}
+
+@mixin header {
+  font-family: $camera;
+  text-transform: none;
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 2em;
+}
+
+@mixin bodycopy {
+  font-family: $camera;
+  text-transform: none;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+// include in the parent container of the circle
+@mixin circle-img($width) {
+  $mobile: 350px;
+  .circle-img-txt {
+    position: relative;
+    width: 100%;
+    height: $width;
+    margin: 100px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text {
+      color: $copy;
+    }
+
+    @media (max-width: $mobile-width) {
+      margin: 50px 0;
+      height: 420px;
+      .circle-txt {
+        height: 420px;
+      }
+    }
+  }
+
+  .circle-txt {
+    position: absolute;
+    height: $width;
+  }
+
+  .circle-container {
+    width: $width;
+    height: $width;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: $width - 100;
+      height: $width - 100;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    @media (max-width: $mobile-width) {
+      width: $mobile;
+      height: $mobile;
+
+      img {
+        width: $mobile - 20;
+        height: $mobile - 20;
+      }
+    }
+  }
+}
+
+/** --------------------- FORM STYLES --------------------- **/
+@mixin form-button {
+  background: none;
+  color: $copy;
+  border: 1px solid $copy;
+  @include mono-type;
+
+  &:hover {
+    background: $electric-blue;
+    border: 1px solid $electric-blue;
+    color: $background;
+  }
+}
+
+@mixin input-field-short {
+  background: none;
+  border: none;
+  border-bottom: 1px solid $copy;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: $copy-secondary;
+  }
+}
+
+@mixin input-field-long-multi {
+  border: 1px solid $copy;
+  @include bodycopy;
+  &:focus {
+    outline: none;
+  }
+}

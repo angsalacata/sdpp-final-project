@@ -1,0 +1,259 @@
+@import "variables";
+
+.content#archive {
+  margin: $content-vertical-padding $menu-horizontal-padding;
+  width: calc(100vw - (2 * $menu-horizontal-padding));
+  @media (max-width: $mobile-width) {
+    margin: 10px;
+  }
+}
+
+.archive-container {
+  width: 100%;
+  align-self: flex-start;
+}
+
+.table {
+  box-sizing: border-box;
+}
+
+.table:first-child,
+.show-archive-table:first-child {
+  border-top: 1px solid $copy;
+}
+
+.mix-row {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid $copy;
+  padding: 0.5em 0.7em;
+  box-sizing: border-box;
+  &:hover {
+    background-color: $zapp-2;
+  }
+
+  @media (max-width: $mobile-width) {
+    padding: 0.5em 0.7em;
+  }
+}
+
+.mix-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+
+  .mix-play-button {
+    justify-content: flex-start;
+    &:hover {
+      color: $electric-blue;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.show-info-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .show-air-date {
+    margin-right: 2em;
+  }
+
+  .showname {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: row;
+    .show {
+      width: 300px;
+      a {
+        display: inline;
+      }
+    }
+  }
+
+  .location {
+    width: fit-content;
+    text-wrap: nowrap;
+    text-align: right;
+    align-self: flex-end;
+    @media (max-width: $mobile-width) {
+      align-self: flex-start;
+    }
+  }
+
+  @media (max-width: $mobile-width) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    .show-air-date {
+      @include label;
+      padding-bottom: 0.3em;
+      margin: 0;
+    }
+
+    .showname {
+      width: 100%;
+      flex-direction: column;
+      order: 3;
+      flex-grow: 1;
+      .host {
+        @include host;
+      }
+    }
+
+    .location {
+      @include label;
+    }
+  }
+}
+
+.mix-info {
+  width: 100%;
+  display: none;
+  margin-bottom: 0.5em;
+  margin-top: 0.8em;
+  // height: 400px;
+}
+
+.mix-row .active {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-left: 2.8em;
+
+  .mix-info-txt {
+    width: 50%;
+    margin-right: 2em;
+
+    & > * {
+      margin-bottom: 1em;
+    }
+
+    .mixName {
+      margin-bottom: 0.1em;
+    }
+  }
+  .mix-image {
+    width: calc(50% - 5em);
+    // margin-left: 4em;
+    img {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: $mobile-width) {
+    margin-left: 0;
+    border-top: 1px dashed $copy;
+    padding-top: 1em;
+    .mix-info-txt {
+      width: 100%;
+      margin-right: 0;
+    }
+    flex-direction: column;
+    .mix-image {
+      // padding-left: 3.2em;
+    }
+    .mix-image,
+    .mix-image img {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
+
+.no-genre {
+  display: none;
+}
+
+.genres {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8em;
+  flex-wrap: wrap;
+  width: 100%;
+  .genre {
+    border: 1px solid $copy;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.2em 0.5em;
+    height: min-content;
+  }
+}
+
+.desc {
+  @include bodycopy;
+}
+
+.tracklist-container {
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+table.tracklist {
+  th {
+    font-size: 0.8em;
+    font-weight: 400;
+    text-align: left;
+  }
+
+  td {
+    @include bodycopy;
+    vertical-align: top;
+    &.tracknum {
+      @include mono-type;
+      padding-right: 1em;
+      vertical-align: baseline;
+    }
+    &.artist {
+      padding-right: 1em;
+      width: 40%;
+    }
+    &.track {
+      width: 60%;
+    }
+  }
+
+  @media (max-width: $mobile-width) {
+    display: none;
+  }
+}
+
+.tracklist-mobile {
+  display: none;
+
+  @media (max-width: $mobile-width) {
+    display: flex;
+    flex-direction: column;
+    .trackitem {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .tracknum {
+      // padding-right: 1em;
+      width: 2em;
+    }
+
+    .trackinfo {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 0.3em;
+    }
+
+    .artist,
+    .track {
+      @include bodycopy;
+    }
+  }
+}

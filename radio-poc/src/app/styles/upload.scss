@@ -1,0 +1,197 @@
+@import "variables";
+
+.content#upload {
+  justify-content: flex-start;
+}
+
+.show-upload {
+  width: 60vw;
+  .submit {
+    margin-top: 1vh;
+  }
+}
+
+.show-upload .input-container {
+  padding-bottom: 1.5em;
+  display: flex;
+  flex-direction: row;
+
+  label:not(.track-container label),
+  .label {
+    width: 33.3%;
+  }
+}
+
+.input-short {
+  display: flex;
+  flex-direction: row;
+
+  input {
+    width: 250px;
+    border: none;
+    @include input-field-short;
+  }
+}
+
+.input-long {
+  display: flex;
+
+  textarea {
+    background: none;
+    padding: 2px;
+    width: 66.6%;
+    height: 10vh;
+    @include input-field-long-multi;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.input-multi {
+  input {
+    border: 1px solid $copy;
+  }
+}
+
+.explicit-container {
+  input[type="checkbox"] {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid $copy;
+    margin-left: 0;
+    margin-top: 5px;
+
+    &:hover {
+      background: $electric-blue;
+    }
+
+    &:checked {
+      background: $copy-secondary;
+    }
+  }
+}
+
+input[type="date"] {
+  @include input-field-short;
+  border: 1px solid $copy;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  padding: 0.2em;
+}
+
+.genre-selection {
+  display: flex;
+  flex-direction: row;
+  & > * {
+    margin-right: 0.2em;
+  }
+
+  select {
+    @include mono-type;
+    background: none;
+    border: 1px solid $copy;
+    font-size: 0.8em;
+    width: fit-content;
+    padding-left: 0.2em;
+  }
+}
+
+.genre-selection .genre-container {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid $copy;
+  font-size: 0.8em;
+  height: fit-content;
+  width: fit-content;
+  padding: 0.2em 0.5em;
+  .genre {
+    padding-right: 0.5em;
+  }
+  .remove:hover {
+    color: $electric-blue;
+    cursor: default;
+  }
+}
+
+// #upload button {
+//   @include form-button;
+// }
+
+.playlist-container {
+  .label {
+    width: 33.3%;
+  }
+  .table-container {
+    width: 66.6%;
+    .column-labels {
+      display: flex;
+      flex-direction: row;
+      width: calc(100% - 2.5em);
+      font-size: 0.8em;
+      margin-left: 2.5em;
+      margin-bottom: 0.75em;
+      & > * {
+        width: calc(50% - 2.5em);
+        margin-right: 1em;
+      }
+    }
+  }
+
+  .track-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 0.5em;
+
+    .track-num-label {
+      padding-right: 0.5em;
+      width: 2em;
+    }
+
+    & > * {
+      margin-right: 1em;
+    }
+    input {
+      @include input-field-short;
+      width: 50%;
+      &::placeholder {
+        font-size: calc(16px * 0.8);
+      }
+    }
+    &:not(.new-track) {
+      width: calc(100% - 2.5em);
+    }
+  }
+}
+
+.input-file {
+  input {
+    width: 66.6%;
+    @include mono-type;
+
+    &::file-selector-button {
+      @include form-button;
+      background: none;
+      color: $copy;
+      margin-right: 1em;
+      font-size: 0.8em;
+    }
+  }
+}
+
+.submit {
+  @include form-button;
+  line-height: 1em;
+  padding: 8px 12px;
+  margin-left: 33.3%;
+  margin-top: 2em;
+
+  &:disabled {
+    background: $disabled-button;
+    pointer-events: none;
+  }
+  
+}

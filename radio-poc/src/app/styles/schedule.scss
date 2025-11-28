@@ -1,0 +1,93 @@
+@import "variables";
+
+$width: 700px;
+
+.content#schedule {
+  padding-bottom: 10vh;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.schedule-container {
+  position: relative;
+  // top: 15vh;
+  // left: 25vw;
+  width: $width;
+  // height: $width;
+  @media (max-width: $mobile-width) {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .idx {
+      width: 1em;
+      margin-right: 0;
+    }
+  }
+}
+
+$length: 15;
+@mixin circle-position($i) {
+  $angle: calc($i / $length) * 360deg;
+  $top: 0.5 * $width * (1 - sin($angle + 60deg));
+  $left: 0.5 * $width * (1 - cos($angle + 60deg));
+
+  top: $top - 50px;
+  left: calc($left + 25%);
+}
+
+@for $i from 0 through $length {
+  .schedule-container .show:nth-child(#{$i}) {
+    width: 250px;
+    position: absolute;
+    @include circle-position($i);
+    @media (max-width: $mobile-width) {
+      position: static;
+      width: 100%;
+      padding: 0.5em 0;
+    }
+  }
+}
+
+.schedule-container .show {
+  display: flex;
+  flex-direction: row;
+  & > div {
+    margin-right: 10px;
+  }
+
+  .dj {
+    font-size: 0.9em;
+  }
+
+  .bullet {
+    min-width: 7px;
+    height: 7px;
+    margin-top: 7px;
+    background: $copy;
+  }
+
+  .info {
+    padding: 0 0.3em;
+  }
+
+  &:hover {
+    .info {
+      // border: 1px solid $copy;
+      background-color: $background;
+      z-index: 10;
+    }
+  }
+}
+
+.time {
+  font-size: 1.25em;
+}
